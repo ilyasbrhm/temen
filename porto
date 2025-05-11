@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qioravansyah Portfolio | Educational Technologist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.globe.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        .perspective {
+            perspective: 1000px;
+        }
+        
+        .card-3d {
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+        
+        .card-3d:hover {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .text-gradient {
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -38px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #3b82f6;
+            border: 4px solid #8b5cf6;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: -28px;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6);
+        }
+        
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 1s ease-in-out;
+        }
+        
+        .project-card:hover .project-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .project-overlay {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+        
+        #vanta-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <div id="vanta-bg"></div>
+    
+    <!-- Navigation -->
+    <nav class="glass-effect fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-xl font-bold text-gradient">QIORAVANSYAH</span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="px-3 py-2 rounded-md text-sm font-medium hover:text-blue-400 transition">Home</a>
+                        <a href="#about" class="px-3 py-2 rounded-md text-sm font-medium hover:text-blue-400 transition">About</a>
+                        <a href="#education" class="px-3 py-2 rounded-md text-sm font-medium hover:text-blue-400 transition">Education</a>
+                        <a href="#experience" class="px-3 py-2 rounded-md text-sm font-medium hover:text-blue-400 transition">Experience</a>
+                        <a href="#projects" class="px-3 py-2 rounded-md text-sm font-medium hover:text-blue-400 transition">Projects</a>
+                        <a href="#contact" class="px-3 py-2 rounded-md text-sm font-medium hover:text-blue-400 transition">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="menu-toggle" class="text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-effect">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-400 transition">Home</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-400 transition">About</a>
+                <a href="#education" class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-400 transition">Education</a>
+                <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-400 transition">Experience</a>
+                <a href="#projects" class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-400 transition">Projects</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium hover:text-blue-400 transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 perspective">
+                    <div class="card-3d bg-gradient-to-br from-blue-500 to-purple-600 p-1 rounded-2xl">
+                        <div class="bg-gray-900 rounded-2xl p-6">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" 
+                                 alt="Profile" 
+                                 class="rounded-xl w-full h-auto object-cover shadow-xl">
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 md:pl-12">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                        <span class="text-gradient">Muhammad Qioravansyah</span>
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl font-semibold mb-6">Educational Technologist</h2>
+                    <p class="text-lg mb-8 text-gray-300">
+                        A passionate Educational Technology student creating innovative learning solutions and digital content.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#contact" class="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full font-medium hover:opacity-90 transition shadow-lg">
+                            Contact Me
+                        </a>
+                        <a href="#projects" class="px-8 py-3 border border-blue-400 rounded-full font-medium hover:bg-blue-400 hover:bg-opacity-10 transition">
+                            View Projects
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- About Section -->
+    <section id="about" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="text-gradient">About Me</span>
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <div class="glass-effect p-8 rounded-2xl">
+                        <p class="mb-6 text-lg">
+                            A Third-year Educational Technology student at Universitas Negeri Jakarta with a GPA of 3.88. Active in participating in organizations, social activities, and various competitions that are in line with my major.
+                        </p>
+                        <p class="mb-6 text-lg">
+                            I like things related to communication between people and enjoy creating educational and creative content. In college I successfully completed educational projects and creative content.
+                        </p>
+                        <p class="text-lg">
+                            I am adaptive, communicative, and used to working together in a team.
+                        </p>
+                    </div>
+                </div>
+                <div class="md:w-1/2 md:pl-12">
+                    <h3 class="text-2xl font-semibold mb-6">My Skills</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Learning Media Design</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Design (Canva & Articulate Storyline)</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Negotiation</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Microsoft Office</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10">
+                        <h3 class="text-2xl font-semibold mb-6">Personal Info</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-envelope mr-3 text-blue-400"></i>
+                                <span>qioravansyah17@gmail.com</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-map-marker-alt mr-3 text-blue-400"></i>
+                                <span>Cijantung, East Jakarta, DKI Jakarta</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-graduation-cap mr-3 text-blue-400"></i>
+                                <span>Educational Technology</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-university mr-3 text-blue-400"></i>
+                                <span>Universitas Negeri Jakarta</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Education Section -->
+    <section id="education" class="py-20 bg-gray-800 bg-opacity-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="text-gradient">Education & Achievements</span>
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-effect p-8 rounded-2xl">
+                    <h3 class="text-2xl font-semibold mb-4">Universitas Negeri Jakarta</h3>
+                    <p class="text-lg mb-4">Educational Technology Undergraduate, GPA: 3.88/4.00</p>
+                    
+                    <div class="mt-6">
+                        <h4 class="text-xl font-medium mb-3">Notable Achievements:</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-book text-blue-400 mt-1 mr-3"></i>
+                                <span>Author of the book "Digital-based Learning"</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-file-alt text-blue-400 mt-1 mr-3"></i>
+                                <span>Author of scientific articles and posters "Adolescent Cognitive Development Viewed from Psychosocial Development at SMKN 51 Jakarta" (In the process of HAKI)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-laptop-code text-blue-400 mt-1 mr-3"></i>
+                                <span>Developer of learning module "Indonesian History for grade XI"</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-paint-brush text-blue-400 mt-1 mr-3"></i>
+                                <span>Designing and making learning media products such as flashcards, flipcharts, and dioramas</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-film text-blue-400 mt-1 mr-3"></i>
+                                <span>Design and create interactive multimedia products using Kotobee and Articulate Storyline 3</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="glass-effect p-8 rounded-2xl">
+                    <h3 class="text-2xl font-semibold mb-4">SMA Negeri 106 Jakarta</h3>
+                    <p class="text-lg mb-4">Social Education (IPS), High School Diploma: 87.45/100.00</p>
+                    
+                    <div class="mt-6">
+                        <h4 class="text-xl font-medium mb-3">High School Activities:</h4>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-users text-purple-400 mt-1 mr-3"></i>
+                                <span>Vice President of Osis II - Responsible for external affairs and building relationships with other school student councils</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-business-time text-purple-400 mt-1 mr-3"></i>
+                                <span>Secretariat Coordinator for Entrepreneurship - Managed division and created online entrepreneurship platform</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-lightbulb text-purple-400 mt-1 mr-3"></i>
+                                <span>Member of the Secretariat for Entrepreneurship - Created entrepreneurial spirit among members</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Experience Section -->
+    <section id="experience" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="text-gradient">Professional Experience</span>
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">Organizational Experience</h3>
+                    
+                    <div class="relative timeline pl-10">
+                        <!-- Relawan Disabilitas UNJ -->
+                        <div class="mb-10 timeline-item">
+                            <div class="glass-effect p-6 rounded-xl">
+                                <h4 class="text-xl font-medium mb-2">Relawan Disabilitas Universitas Negeri Jakarta</h4>
+                                <p class="text-blue-400 mb-2">Jan 2024 - Jan 2025</p>
+                                <p class="mb-2 font-medium">Treasurer</p>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Responsible for all finances contained in the Jakarta State University Disability Volunteers</li>
+                                    <li>Organize and manage the finances of the Jakarta State University Disability Volunteers</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-10 timeline-item">
+                            <div class="glass-effect p-6 rounded-xl">
+                                <h4 class="text-xl font-medium mb-2">Relawan Disabilitas Universitas Negeri Jakarta</h4>
+                                <p class="text-blue-400 mb-2">Jan 2024 - Jan 2025</p>
+                                <p class="mb-2 font-medium">Head of Public Relations Division</p>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Responsible for managing the Instagram social media account @relawandisabilitasunj</li>
+                                    <li>Responsible for the distribution of all jobdesk members of the Public Relations division</li>
+                                    <li>Created content reels with 45,000++ total views</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-10 timeline-item">
+                            <div class="glass-effect p-6 rounded-xl">
+                                <h4 class="text-xl font-medium mb-2">Himpunan Mahasiswa Teknologi Pendidikan, UNJ</h4>
+                                <p class="text-blue-400 mb-2">Feb 2023 - Feb 2024</p>
+                                <p class="mb-2 font-medium">Staff Department of Student Affairs (Scientific Division)</p>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Creating creative content about Educational Technology</li>
+                                    <li>Creating articles about Educational Technology published through Linkedin HMPTP</li>
+                                    <li>Record all achievements of Education Technology students</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">Work Experience</h3>
+                    
+                    <div class="relative timeline pl-10">
+                        <!-- International Day of Disability -->
+                        <div class="mb-10 timeline-item">
+                            <div class="glass-effect p-6 rounded-xl">
+                                <h4 class="text-xl font-medium mb-2">International Day of Disability</h4>
+                                <p class="text-blue-400 mb-2">2024</p>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Designing the booth of Universitas Negeri Jakarta</li>
+                                    <li>Preparing all the tools and materials needed for the booth</li>
+                                    <li>Becoming a narrator, and making evaluation sheets and flyers</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Storyboarding Training -->
+                        <div class="mb-10 timeline-item">
+                            <div class="glass-effect p-6 rounded-xl">
+                                <h4 class="text-xl font-medium mb-2">Storyboarding Training Using Canva</h4>
+                                <p class="text-blue-400 mb-2">2024</p>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Managing social media, creating content for feeds</li>
+                                    <li>Creating promotional content reels</li>
+                                    <li>Mentoring small groups at trainings</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Volunteer Community Service -->
+                        <div class="mb-10 timeline-item">
+                            <div class="glass-effect p-6 rounded-xl">
+                                <h4 class="text-xl font-medium mb-2">Volunteer Community Service</h4>
+                                <p class="text-blue-400 mb-2">2024</p>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Learning Facilitator for service accommodation in Jati Barang, Indramayu</li>
+                                    <li>Compiling reaction evaluation questionnaires</li>
+                                    <li>Designing banner, banner, and x-banner needs</li>
+                                    <li>Conducting financial audits</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <!-- Focus Group Discussion -->
+                        <div class="mb-10 timeline-item">
+                            <div class="glass-effect p-6 rounded-xl">
+                                <h4 class="text-xl font-medium mb-2">Focus Group Discussion</h4>
+                                <p class="text-blue-400 mb-2">2024</p>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Create ToR, conduct minutes</li>
+                                    <li>Create event reports</li>
+                                    <li>Process participant evaluation results</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-gray-800 bg-opacity-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="text-gradient">My Projects</span>
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 1 -->
+                <div class="project-card rounded-xl overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" 
+                         alt="Digital-based Learning Book" 
+                         class="w-full h-64 object-cover">
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black to-transparent p-6 flex flex-col justify-end">
+                        <h3 class="text-xl font-bold mb-2">Digital-based Learning Book</h3>
+                        <p class="text-gray-300 mb-4">Author of a comprehensive book on digital learning methodologies</p>
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-blue-500 bg-opacity-30 rounded-full text-sm">Author</span>
+                            <span class="px-3 py-1 bg-purple-500 bg-opacity-30 rounded-full text-sm">Education</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 2 -->
+                <div class="project-card rounded-xl overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" 
+                         alt="Indonesian History Module" 
+                         class="w-full h-64 object-cover">
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black to-transparent p-6 flex flex-col justify-end">
+                        <h3 class="text-xl font-bold mb-2">Indonesian History Module</h3>
+                        <p class="text-gray-300 mb-4">Developer of learning module for grade XI students</p>
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-blue-500 bg-opacity-30 rounded-full text-sm">Developer</span>
+                            <span class="px-3 py-1 bg-purple-500 bg-opacity-30 rounded-full text-sm">Education</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card rounded-xl overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1541462608143-67571c6738dd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" 
+                         alt="Interactive Multimedia" 
+                         class="w-full h-64 object-cover">
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black to-transparent p-6 flex flex-col justify-end">
+                        <h3 class="text-xl font-bold mb-2">Interactive Multimedia</h3>
+                        <p class="text-gray-300 mb-4">Design and create interactive multimedia products using Kotobee and Articulate Storyline 3</p>
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-blue-500 bg-opacity-30 rounded-full text-sm">Designer</span>
+                            <span class="px-3 py-1 bg-purple-500 bg-opacity-30 rounded-full text-sm">Multimedia</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 4 -->
+                <div class="project-card rounded-xl overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=871&q=80" 
+                         alt="Disability Volunteer Content" 
+                         class="w-full h-64 object-cover">
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black to-transparent p-6 flex flex-col justify-end">
+                        <h3 class="text-xl font-bold mb-2">Disability Volunteer Content</h3>
+                        <p class="text-gray-300 mb-4">Created content reels with 45,000++ total views for @relawandisabilitasunj</p>
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-blue-500 bg-opacity-30 rounded-full text-sm">Content Creator</span>
+                            <span class="px-3 py-1 bg-purple-500 bg-opacity-30 rounded-full text-sm">Social Media</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="project-card rounded-xl overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=822&q=80" 
+                         alt="Educational Technology Content" 
+                         class="w-full h-64 object-cover">
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black to-transparent p-6 flex flex-col justify-end">
+                        <h3 class="text-xl font-bold mb-2">Educational Technology Content</h3>
+                        <p class="text-gray-300 mb-4">Creating creative content about Educational Technology for HMPTP</p>
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-blue-500 bg-opacity-30 rounded-full text-sm">Content Creator</span>
+                            <span class="px-3 py-1 bg-purple-500 bg-opacity-30 rounded-full text-sm">Education</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 6 -->
+                <div class="project-card rounded-xl overflow-hidden relative">
+                    <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80" 
+                         alt="Entrepreneurship Platform" 
+                         class="w-full h-64 object-cover">
+                    <div class="project-overlay absolute inset-0 bg-gradient-to-t from-black to-transparent p-6 flex flex-col justify-end">
+                        <h3 class="text-xl font-bold mb-2">Entrepreneurship Platform</h3>
+                        <p class="text-gray-300 mb-4">Created an online entrepreneurship platform through Instagram during high school</p>
+                        <div class="flex space-x-2">
+                            <span class="px-3 py-1 bg-blue-500 bg-opacity-30 rounded-full text-sm">Entrepreneur</span>
+                            <span class="px-3 py-1 bg-purple-500 bg-opacity-30 rounded-full text-sm">Social Media</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="text-gradient">Get In Touch</span>
+                </h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-600 mx-auto"></div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-8">
+                    <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-blue-500 bg-opacity-20 p-3 rounded-full mr-4">
+                                <i class="fas fa-envelope text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Email</h4>
+                                <p class="text-gray-300">qioravansyah17@gmail.com</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-500 bg-opacity-20 p-3 rounded-full mr-4">
+                                <i class="fas fa-map-marker-alt text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">Location</h4>
+                                <p class="text-gray-300">Cijantung, East Jakarta, DKI Jakarta</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-blue-500 bg-opacity-20 p-3 rounded-full mr-4">
+                                <i class="fab fa-linkedin text-blue-400"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium">LinkedIn</h4>
+                                <p class="text-gray-300">www.linkedin.com/in/m-qioravansyah-d-t-820bb6237</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-10">
+                        <h3 class="text-2xl font-semibold mb-6">Follow Me</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="bg-blue-500 bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition">
+                                <i class="fab fa-instagram text-blue-400"></i>
+                            </a>
+                            <a href="#" class="bg-blue-500 bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition">
+                                <i class="fab fa-twitter text-blue-400"></i>
+                            </a>
+                            <a href="#" class="bg-blue-500 bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition">
+                                <i class="fab fa-github text-blue-400"></i>
+                            </a>
+                            <a href="#" class="bg-blue-500 bg-opacity-20 p-3 rounded-full hover:bg-opacity-30 transition">
+                                <i class="fab fa-linkedin text-blue-400"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2">
+                    <form class="glass-effect p-8 rounded-2xl">
+                        <div class="mb-6">
+                            <label for="name" class="block mb-2 font-medium">Your Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="email" class="block mb-2 font-medium">Your Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="subject" class="block mb-2 font-medium">Subject</label>
+                            <input type="text" id="subject" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="message" class="block mb-2 font-medium">Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-medium hover:opacity-90 transition">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="py-10 bg-gray-900 bg-opacity-80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <span class="text-xl font-bold text-gradient">QIORAVANSYAH</span>
+                </div>
+                
+                <div class="flex flex-col items-center md:items-end">
+                    <p class="mb-4 text-center md:text-right">Educational Technologist & Content Creator</p>
+                    <p class="text-gray-400 text-sm">© 2023 Muhammad Qioravansyah Drysa Tuela. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+        
+        // Vanta.js background
+        VANTA.GLOBE({
+            el: "#vanta-bg",
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200.00,
+            minWidth: 200.00,
+            scale: 1.00,
+            scaleMobile: 1.00,
+            color: 0x3b82f6,
+            color2: 0x8b5cf6,
+            backgroundColor: 0x111827,
+            size: 0.8
+        });
+        
+        // Animate skill bars on scroll
+        const animateSkillBars = () => {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            skillBars.forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        };
+        
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.id === 'about') {
+                        animateSkillBars();
+                    }
+                    entry.target.classList.add('animate-fadeIn');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
